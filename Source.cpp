@@ -3,15 +3,66 @@
 #include <mmsystem.h>
 #include <iomanip>
 #include <ios>
-#include <mciapi.h>
-
+#include <vector>
+#include <filesystem>
 
 #pragma comment(lib, "Winmm.lib")
 
 using namespace std;
+//namespace fs = std::filesystem;
 
-int choice;
-string song;
+class Playlist {
+private:
+	vector<filesystem::path> wav;
+	int count = 0;
+
+public:
+	Playlist() {
+		wav.clear();
+	}
+
+	Playlist(string path) {		// add songs in prenamed directory to vector
+		string name;
+		for (const auto & entry : filesystem::directory_iterator(path)) {
+			wav.push_back(entry.path());
+		}
+	}
+
+	void setFolder() {
+		// need function to designate files in folder to array spots
+	}
+
+	void play(/*parameter*/) {
+		//	play song
+		string song = audioFileName;
+		PlaySound(TEXT(audioFileName), NULL, SND_ASYNC);
+		// Kruger, when you figure out what data type PlaySound requires,
+		// add it as parameter
+	}
+
+	void pause() {
+		// pause song
+	}
+
+	void stop() {
+		//	 stop song
+	}
+
+	void skip() {
+		//	skip song
+	}
+
+	void prev() {
+		//	restart song/go back one song
+	}
+
+	void test() {			// delete before submission
+		for (int i =0; i<wav.size(); i++) {
+			cout << wav[i] << endl;
+		}
+	}
+
+};
 
 void introGUI()
 {
@@ -26,12 +77,15 @@ void introGUI()
 
 }
 
-void playingSong(const string audioFileName)
-{
+// this function needs to be in the class
+// decision function requires this to work so Im leavin this here for now
+void playingSong(const string audioFileName) {
 	string song = audioFileName;
 	PlaySound(TEXT(audioFileName), NULL, SND_ASYNC);
 
 }
+
+int choice;
 void decision()
 {
 	switch (choice) {
@@ -59,6 +113,12 @@ void decision()
 }
 
 int main() {
+	/*
+	Playlist p("songs");
+	p.test();
+	*/
+
+	/*
 	bool loop = true;
 	introGUI();
 	while (loop) {
@@ -66,15 +126,14 @@ int main() {
 		decision();
 
 	}
-
+	*/
 
 
 	/*
-	PlaySound(TEXT("Follow You.wav"), NULL, SND_ASYNC);
-	Sleep(5000);
-	PlaySound(NULL, 0, 0);
-	PlaySound(TEXT("good 4 u.wav"), NULL, SND_ASYNC);
+	introGUI();
+	PlaySound(TEXT("Follow You.wav"), NULL, SND_ASYNC); 
 	Sleep(5000);
 	PlaySound(NULL, 0, 0);
 	*/
+
 }
